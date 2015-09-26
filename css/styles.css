@@ -1,0 +1,25 @@
+header {
+	padding: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #bbb;
+	background-color: #faf6e1;
+}
+header h3 {
+	margin: 0;
+	color: #2F9E00;
+	letter-spacing: 8px;
+	font-size: 11px;
+	text-transform: uppercase;
+	text-shadow: 1px 1px #fff;
+}
+.logo {
+	background: url('https://d3ki9tyy5l5ruj.cloudfront.net/obj/1b1bd88e57187e58e56f50ed74d03551fc464326/logo_glow.png') no-repeat left center;
+	background-size: contain;
+	height: 30px;
+}
+footer .container-fluid {
+	margin-top: 10px;
+}
+footer p {
+	margin: 0;
+}

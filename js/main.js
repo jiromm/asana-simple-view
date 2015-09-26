@@ -1,20 +1,24 @@
 function App() {
 	this.apiUrl = 'https://app.asana.com/api/1.0/';
 	this.workspaceId = 167784858458;
+	this.nl2br = function(string) {
+		return string.replace(/([^>])\n/g, '$1<br/>');
+	}
 }
 
 App.prototype.init = function() {
 	var self = this;
 
-	$app.getData($app.workspaceId, false, false);
+	// Get project
+	this.getData(this.workspaceId, false, false);
 
-	$('.projects').on('click', 'li', function(e) {
+	$('.projects').on('click', 'a', function(e) {
 		e.preventDefault();
 
 		self.getData(false, $(this).attr('data-id'), false);
 	});
 
-	$('.tasks').on('click', 'li', function(e) {
+	$('.tasks').on('click', 'a', function(e) {
 		e.preventDefault();
 
 		self.getData(false, false, $(this).attr('data-id'));
@@ -75,18 +79,18 @@ App.prototype.drawProjects = function(projects) {
 
 	if (projects !== false) {
 		if (projects[1] == 'success') {
-			var html = '<ul class="list-unstyled">',
+			var html = '<div class="list-group">',
 				projectList = projects[0]['data'];
 
 			if (projectList.length) {
 				for (var project in projectList) {
 					if (projectList.hasOwnProperty(project)) {
-						html += '<li data-id="' + projectList[project]['id'] + '">' + projectList[project]['name'] + '</li>';
+						html += '<a href="#" class="list-group-item" data-id="' + projectList[project]['id'] + '">' + projectList[project]['name'] + '</a>';
 					}
 				}
 			}
 
-			html += '</ul>';
+			html += '</div>';
 
 			$(selector).html(html);
 		} else {
@@ -100,18 +104,18 @@ App.prototype.drawTasks = function(tasks) {
 
 	if (tasks !== false) {
 		if (tasks[1] == 'success') {
-			var html = '<ul class="list-unstyled">',
+			var html = '<div class="list-group">',
 				taskList = tasks[0]['data'];
 
 			if (taskList.length) {
 				for (var task in taskList) {
 					if (taskList.hasOwnProperty(task)) {
-						html += '<li data-id="' + taskList[task]['id'] + '">' + taskList[task]['name'] + '</li>';
+						html += '<a href="#" class="list-group-item"  data-id="' + taskList[task]['id'] + '">' + taskList[task]['name'] + '</a>';
 					}
 				}
 			}
 
-			html += '</ul>';
+			html += '</div>';
 
 			$(selector).html(html);
 		} else {
@@ -132,7 +136,7 @@ App.prototype.drawTask = function(task) {
 			console.log(taskDeatils.length);
 
 			html += '<div class="lead">' + taskDeatils['name'] + '</div>';
-			html += '<p>' + taskDeatils['notes'] + '</p>';
+			html += '<p>' + this.nl2br(taskDeatils['notes']) + '</p>';
 
 			$(selector).html(html);
 		} else {
@@ -141,8 +145,8 @@ App.prototype.drawTask = function(task) {
 	}
 }
 
-$app = new App();
+app = new App();
 
 $(function() {
-	$app.init();
+	app.init();
 });
