@@ -47,7 +47,7 @@ App.prototype.getTasks = function(projectId) {
 		return false;
 	}
 
-	return this.get('projects/' + projectId + '/tasks');
+	return this.get('projects/' + projectId + '/tasks?opt_fields=name,completed');
 };
 
 App.prototype.getTask = function(taskId) {
@@ -110,7 +110,13 @@ App.prototype.drawTasks = function(tasks) {
 			if (taskList.length) {
 				for (var task in taskList) {
 					if (taskList.hasOwnProperty(task)) {
-						html += '<a href="#" class="list-group-item"  data-id="' + taskList[task]['id'] + '">' + taskList[task]['name'] + '</a>';
+						var className = '';
+
+						if (taskList[task]['completed']) {
+							className = ' completed';
+						}
+
+						html += '<a href="#" class="list-group-item' + className + '"  data-id="' + taskList[task]['id'] + '">' + taskList[task]['name'] + '</a>';
 					}
 				}
 			}
@@ -129,14 +135,13 @@ App.prototype.drawTask = function(task) {
 
 	if (task !== false) {
 		if (task[1] == 'success') {
-			var html = '',
+			var html = '<div class="well">',
 				taskDeatils = task[0]['data'];
-
-			console.log(taskDeatils);
-			console.log(taskDeatils.length);
 
 			html += '<div class="lead">' + taskDeatils['name'] + '</div>';
 			html += '<p>' + this.nl2br(taskDeatils['notes']) + '</p>';
+
+			html += '</div>';
 
 			$(selector).html(html);
 		} else {

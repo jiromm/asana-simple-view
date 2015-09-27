@@ -17,6 +17,10 @@ header h3 {
 	background-size: contain;
 	height: 30px;
 }
+.tasks .completed {
+	background-color: #f5f5f5;
+	color: #999;
+}
 footer .container-fluid {
 	margin-top: 10px;
 }
