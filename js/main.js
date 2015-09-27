@@ -47,7 +47,7 @@ App.prototype.getTasks = function(projectId) {
 		return false;
 	}
 
-	return this.get('projects/' + projectId + '/tasks?opt_fields=name,completed');
+	return this.get('projects/' + projectId + '/tasks?opt_fields=name,completed,assignee.photo');
 };
 
 App.prototype.getTask = function(taskId) {
@@ -110,13 +110,29 @@ App.prototype.drawTasks = function(tasks) {
 			if (taskList.length) {
 				for (var task in taskList) {
 					if (taskList.hasOwnProperty(task)) {
-						var className = '';
+						var taskName = taskList[task]['name'],
+							className = '',
+							photo = '';
 
 						if (taskList[task]['completed']) {
-							className = ' completed';
+							className += ' completed';
 						}
 
-						html += '<a href="#" class="list-group-item' + className + '"  data-id="' + taskList[task]['id'] + '">' + taskList[task]['name'] + '</a>';
+						if (taskList[task]['assignee'] != null) {
+							photo = '<span class="assignee-photo" style="background-image: url(' +
+								taskList[task]['assignee']['photo']['image_21x21'] +
+								')"></span>';
+						}
+
+						if (taskName.substr(taskName.length - 1) == ':') {
+							className += ' separator';
+						}
+
+						html +=
+							'<a href="#" class="list-group-item' + className + '" data-id="' + taskList[task]['id'] + '">' +
+								photo +
+								'<span class="name">' + taskName + '</span>' +
+							'</a>';
 					}
 				}
 			}

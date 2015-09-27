@@ -21,6 +21,27 @@ header h3 {
 	background-color: #f5f5f5;
 	color: #999;
 }
+.tasks .name {
+	margin-left: 35px;
+}
+.tasks .separator {
+	padding: 1px 0 1px 15px;
+	margin-left: 0;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: #faf6e1 !important;
+}
+.tasks .separator .name {
+	margin-left: 0;
+}
+.assignee-photo {
+	display: inline-block;
+	background-size: contain;
+	width: 21px;
+	height: 21px;
+	position: absolute;
+	border-radius: 50%;
+}
 footer .container-fluid {
 	margin-top: 10px;
 }
