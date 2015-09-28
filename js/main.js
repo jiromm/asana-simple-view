@@ -16,12 +16,23 @@ App.prototype.init = function() {
 		e.preventDefault();
 
 		self.getData(false, $(this).attr('data-id'), false);
+
+		$('.projects a').removeClass('active');
+		$(this).addClass('active');
+
+		$('.tasks').html('<span class="text-muted">loading...</span>');
+		$('.task').html('');
 	});
 
 	$('.tasks').on('click', 'a', function(e) {
 		e.preventDefault();
 
 		self.getData(false, false, $(this).attr('data-id'));
+
+		$('.tasks a').removeClass('active');
+		$(this).addClass('active');
+
+		$('.task').html('<span class="text-muted">loading...</span>');
 	});
 };
 
