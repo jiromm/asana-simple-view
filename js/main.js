@@ -119,28 +119,35 @@ App.prototype.drawTasks = function(tasks) {
 				taskList = tasks[0]['data'];
 
 			if (taskList.length) {
+				var count = 1;
+
 				for (var task in taskList) {
 					if (taskList.hasOwnProperty(task)) {
 						var taskName = taskList[task]['name'],
 							className = '',
-							photo = '';
+							photo = '',
+							numeration = '';
 
 						if (taskList[task]['completed']) {
 							className += ' completed';
 						}
 
 						if (taskList[task]['assignee'] != null) {
-							photo = '<span class="assignee-photo" style="background-image: url(' +
-								taskList[task]['assignee']['photo']['image_21x21'] +
+							photo =
+								' <span class="assignee-photo" style="background-image: url(' +
+									taskList[task]['assignee']['photo']['image_21x21'] +
 								')"></span>';
 						}
 
 						if (taskName.substr(taskName.length - 1) == ':') {
 							className += ' separator';
+						} else {
+							numeration = '<span class="numeration">' + (count++) + '</span>';
 						}
 
 						html +=
 							'<a href="#" class="list-group-item' + className + '" data-id="' + taskList[task]['id'] + '">' +
+								numeration +
 								photo +
 								'<span class="name">' + taskName + '</span>' +
 							'</a>';
